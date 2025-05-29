@@ -1,97 +1,92 @@
-var formulario = document.querySelector("#form")
+// Seleccionamos el formulario por su ID
+const formulario = document.querySelector("#formulario");
 
-formulario.onsubmit = function(e) {
+// Función que se ejecuta al enviar el formulario
+formulario.onsubmit = function (event) {
+  event.preventDefault(); // Evita que el formulario recargue la página
 
-  e.prevent();
-  
-  var n = formulario.elements[0]
-  var e = formulario.elements[1]
-  var na = formulario.elements[2]
+  // Obtenemos los elementos del formulario
+  const inputNombre = formulario.elements["name"];
+  const inputEdad = formulario.elements["age"];
+  const inputNacionalidad = formulario.elements["nationality"];
 
-  var nombre = n.value
-  var edad = e.value
+  const nombre = inputNombre.value.trim();
+  const edad = parseInt(inputEdad.value);
+  const nacionalidad = inputNacionalidad.value;
 
-  var i = na.selectedIndex
-  var nacionalidad = na.options[i].value
-  console.log(nombre, edad)
-  console.log(nacionalidad)
+  // Validaciones
+  let esValido = true;
 
   if (nombre.length === 0) {
-    n.classList.add("error")
-  }
-  if (edad < 18 || edad > 120) {
-    e.classList.add("error")
+    inputNombre.classList.add("error");
+    esValido = false;
+  } else {
+    inputNombre.classList.remove("error");
   }
 
-if (nombre.length > 0 
-  && (edad > 18 
-    && edad < 120) ) {
-  agregarInvitado(nombre, edad, nacionalidad)
+  if (isNaN(edad) || edad < 18 || edad > 120) {
+    inputEdad.classList.add("error");
+    esValido = false;
+  } else {
+    inputEdad.classList.remove("error");
   }
-}
 
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-document.body.appendChild(corteLinea)
-document.body.appendChild(botonBorrar);
+  // Si los datos son válidos, agregamos el invitado
+  if (esValido) {
+    agregarInvitado(nombre, edad, nacionalidad);
+    formulario.reset(); // Limpia los campos después de agregar
+  }
+};
 
+// Función para agregar un invitado a la lista
 function agregarInvitado(nombre, edad, nacionalidad) {
+  // Diccionario para convertir códigos a texto
+  const nacionalidades = {
+    ar: "Argentina",
+    mx: "Mexicana",
+    per: "Peruana",
+    vnzl: "Venezolana"
+  };
 
-  if (nacionalidad === "ar") {
-    nacionalidad = "Argentina"
+  const nacionalidadTexto = nacionalidades[nacionalidad] || nacionalidad;
+
+  // Seleccionamos el contenedor de la lista
+  const lista = document.getElementById("lista-de-invitados");
+
+  // Creamos una tarjeta para el nuevo invitado
+  const elementoLista = document.createElement("div");
+  elementoLista.classList.add("elemento-lista");
+
+  // Función auxiliar para crear los campos de la tarjeta
+  function crearElemento(descripcion, valor) {
+    const span = document.createElement("span");
+    const input = document.createElement("input");
+    const br = document.createElement("br");
+
+    span.textContent = descripcion + ": ";
+    input.value = valor;
+    input.readOnly = true;
+
+    elementoLista.appendChild(span);
+    elementoLista.appendChild(input);
+    elementoLista.appendChild(br);
   }
-  else if (nacionalidad === "mx") {
-    nacionalidad = "Mexicana"
-  }
-  else if (nacionalidad === "vnzl") {
-    nacionalidad = "Venezolana"
-  }
-  else if (nacionalidad === "per") {
-    nacionalidad = "Peruana"
-  }
 
-var lista = document.getElementById("lista-de-invitados")
+  // Se crean los campos para nombre, edad y nacionalidad
+  crearElemento("Nombre", nombre);
+  crearElemento("Edad", edad);
+  crearElemento("Nacionalidad", nacionalidadTexto);
 
-var elementoLista = document.createElement("div")
-elementoLista.classList.added("elemento-lista")
-lista.appendChild(elementoLista)
+  // Botón para eliminar invitado
+  const botonBorrar = document.createElement("button");
+  botonBorrar.textContent = "Eliminar invitado";
+  botonBorrar.onclick = function () {
+    elementoLista.remove(); // Elimina la tarjeta completa
+  };
 
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = "Nombre: "
-inputNombre.value = nombre 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
+  elementoLista.appendChild(document.createElement("br"));
+  elementoLista.appendChild(botonBorrar);
 
-function crearElemento(descripcion, valor) {
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = descripcion + ": "
-inputNombre.value = valor 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
-}
-
-crearElemento("Nombre", nombre)
-crearElemento("Edad", edad)
-crearElemento("Nacionalidad", nacionalidad)
-
-
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-elementoLista.appendChild(corteLinea)
-elementoLista.appendChild(botonBorrar);
-
- botonBorrar.onclick = function() {
-// this.parentNode.style.display = 'none';
-botonBorrar.parentNode.remove()
-  }
+  // Agregamos la tarjeta a la lista
+  lista.appendChild(elementoLista);
 }

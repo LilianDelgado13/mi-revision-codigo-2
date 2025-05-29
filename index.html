@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <h1>Bienvenidos a mi fiesta</h1>
+  <h2>Por favor, confirmar asistencia:</h2>
+
+  <!-- Formulario para agregar invitados -->
+  <form class="formulario" id="formulario">
+    <!-- Campo Nombre -->
+    <label for="name">Nombre</label>
+    <input type="text" name="name" id="name" placeholder="Ej. María López" required />
+
+    <!-- Campo Edad -->
+    <label for="age">Edad</label>
+    <input type="number" name="age" id="age" placeholder="18+" required />
+
+    <!-- Campo Nacionalidad con opción predeterminada vacía -->
+    <label for="nationality">Nacionalidad</label>
+    <select name="nationality" id="nationality" required>
+      <option value="" disabled selected>Selecciona tu nacionalidad</option>
+      <option value="ar">Argentina</option>
+      <option value="mx">Mexicana</option>
+      <option value="per">Peruana</option>
+      <option value="vnzl">Venezolana</option>
+    </select>
+
+    <!-- Botón para enviar -->
+    <input type="submit" value="Enviar" />
+  </form>
+
+  <!-- Contenedor donde aparecerá la lista de invitados -->
+  <div>
+    <h2>Lista de invitados</h2>
+    <div id="lista-de-invitados"></div>
+  </div>
+
+  <!-- Script que contiene la lógica -->
+  <script src="./formulario.js"></script>
+</body>
+</html>
