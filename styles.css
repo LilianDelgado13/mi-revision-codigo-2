@@ -1,69 +1,116 @@
-/* Fondo degradado bonito para el body */
+/* Fondo con degradado suave: amarillo pastel → azul cielo → rosa pastel */
 body {
-  background: linear-gradient(to right, #f0c27b, #4b1248);
-  font-family: Arial, sans-serif;
-  color: #333;
-  padding: 20px;
-}
-
-/* Estilos para el formulario */
-.formulario {
-  padding: 20px;
+  background: linear-gradient(to right, #fff9c4, #87ceeb, #ffc0cb);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 40px 0;
   display: flex;
   flex-direction: column;
-  width: 400px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 30px;
+  align-items: center;
 }
 
+/* Título principal con rosa fuerte */
+h1 {
+  font-size: 2.5em;
+  color: #e91e63; /* rosa fuerte */
+  margin-bottom: 0.2em;
+  text-align: center;
+}
+
+/* Subtítulo */
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  color: #333;
+  text-align: center;
+}
+
+/* Contenedor del formulario */
+.formulario {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Inputs y select */
 .formulario input,
 .formulario select {
-  margin-top: 5px;
-  margin-bottom: 15px;
-  padding: 5px 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1em;
+  width: 100%;
 }
 
-/* Clase para marcar los campos con error */
-.error {
-  background-color: rgba(255, 0, 0, 0.3);
-  border: 1px solid red;
+/* Botón de enviar con rosa fuerte */
+.formulario input[type="submit"] {
+  background-color: #e91e63;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-/* Contenedor de cada invitado */
+.formulario input[type="submit"]:hover {
+  background-color: #c2185b;
+}
+
+/* Contenedor de la lista de invitados */
+#lista-de-invitados {
+  margin-top: 40px;
+  width: 400px;
+}
+
+/* Tarjeta de invitado */
 .elemento-lista {
   background-color: #fff;
-  border: 2px solid #4b1248;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
-  width: 400px;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e91e63; /* rosa fuerte */
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Input que aparece dentro de cada tarjeta */
+/* Campos dentro de la tarjeta */
+.elemento-lista span {
+  display: block;
+  font-weight: bold;
+  color: #e91e63;
+}
+
 .elemento-lista input {
   border: none;
   background: none;
-  color: #4b1248;
-  font-size: 16px;
-  margin: 5px 0;
+  font-size: 1em;
+  color: #e91e63;
+  margin-bottom: 10px;
+  display: block;
 }
 
-/* Botón de eliminar */
+/* Botón de eliminar con rosa fuerte */
 .elemento-lista button {
-  background-color: #4b1248;
+  background-color: #e91e63;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 5px;
+  font-weight: bold;
 }
 
 .elemento-lista button:hover {
-  background-color: #6d1c6f;
+  background-color: #c2185b;
+}
+
+/* Estilo para campos inválidos */
+.error {
+  background-color: rgba(255, 0, 0, 0.2);
+  border: 1px solid red;
 }

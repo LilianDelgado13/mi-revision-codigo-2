@@ -1,47 +1,46 @@
-// Se selecciona el formulario correctamente por ID
-var formulario = document.querySelector("#formulario");
+// Seleccionamos el formulario por su ID
+const formulario = document.querySelector("#formulario");
 
-// Corrige el nombre del método preventDefault (estaba mal escrito)
+// Función que se ejecuta al enviar el formulario
 formulario.onsubmit = function (event) {
-  event.preventDefault();
+  event.preventDefault(); // Evita que el formulario recargue la página
 
-  // Cambié nombres de variables para que no se repitan (antes usabas "e" dos veces)
-  var inputNombre = formulario.elements["name"];
-  var inputEdad = formulario.elements["age"];
-  var inputNacionalidad = formulario.elements["nationality"];
+  // Obtenemos los elementos del formulario
+  const inputNombre = formulario.elements["name"];
+  const inputEdad = formulario.elements["age"];
+  const inputNacionalidad = formulario.elements["nationality"];
 
-  var nombre = inputNombre.value.trim();
-  var edad = parseInt(inputEdad.value);
+  const nombre = inputNombre.value.trim();
+  const edad = parseInt(inputEdad.value);
+  const nacionalidad = inputNacionalidad.value;
 
-  var nacionalidad = inputNacionalidad.value;
+  // Validaciones
+  let esValido = true;
 
-  console.log(nombre, edad);
-  console.log(nacionalidad);
-
-  // Validaciones básicas
   if (nombre.length === 0) {
     inputNombre.classList.add("error");
+    esValido = false;
   } else {
     inputNombre.classList.remove("error");
   }
 
-  if (edad < 18 || edad > 120 || isNaN(edad)) {
+  if (isNaN(edad) || edad < 18 || edad > 120) {
     inputEdad.classList.add("error");
+    esValido = false;
   } else {
     inputEdad.classList.remove("error");
   }
 
-  // Si todo está bien, se agrega el invitado
-  if (nombre.length > 0 && edad >= 18 && edad <= 120) {
+  // Si los datos son válidos, agregamos el invitado
+  if (esValido) {
     agregarInvitado(nombre, edad, nacionalidad);
-
-    // Limpia el formulario
-    formulario.reset();
+    formulario.reset(); // Limpia los campos después de agregar
   }
 };
 
+// Función para agregar un invitado a la lista
 function agregarInvitado(nombre, edad, nacionalidad) {
-  // Se traduce el valor de la nacionalidad
+  // Diccionario para convertir códigos a texto
   const nacionalidades = {
     ar: "Argentina",
     mx: "Mexicana",
@@ -49,19 +48,20 @@ function agregarInvitado(nombre, edad, nacionalidad) {
     vnzl: "Venezolana"
   };
 
-  var nacionalidadTexto = nacionalidades[nacionalidad] || nacionalidad;
+  const nacionalidadTexto = nacionalidades[nacionalidad] || nacionalidad;
 
-  var lista = document.getElementById("lista-de-invitados");
+  // Seleccionamos el contenedor de la lista
+  const lista = document.getElementById("lista-de-invitados");
 
-  var elementoLista = document.createElement("div");
+  // Creamos una tarjeta para el nuevo invitado
+  const elementoLista = document.createElement("div");
   elementoLista.classList.add("elemento-lista");
-  lista.appendChild(elementoLista);
 
-  // Función para crear un campo
+  // Función auxiliar para crear los campos de la tarjeta
   function crearElemento(descripcion, valor) {
-    var span = document.createElement("span");
-    var input = document.createElement("input");
-    var br = document.createElement("br");
+    const span = document.createElement("span");
+    const input = document.createElement("input");
+    const br = document.createElement("br");
 
     span.textContent = descripcion + ": ";
     input.value = valor;
@@ -72,18 +72,21 @@ function agregarInvitado(nombre, edad, nacionalidad) {
     elementoLista.appendChild(br);
   }
 
+  // Se crean los campos para nombre, edad y nacionalidad
   crearElemento("Nombre", nombre);
   crearElemento("Edad", edad);
   crearElemento("Nacionalidad", nacionalidadTexto);
 
   // Botón para eliminar invitado
-  var botonBorrar = document.createElement("button");
+  const botonBorrar = document.createElement("button");
   botonBorrar.textContent = "Eliminar invitado";
   botonBorrar.onclick = function () {
-    elementoLista.remove();
+    elementoLista.remove(); // Elimina la tarjeta completa
   };
 
-  var br = document.createElement("br");
-  elementoLista.appendChild(br);
+  elementoLista.appendChild(document.createElement("br"));
   elementoLista.appendChild(botonBorrar);
+
+  // Agregamos la tarjeta a la lista
+  lista.appendChild(elementoLista);
 }
